@@ -25,7 +25,7 @@ logger = build_logger()
 
 DEFAULT_API_CONCURRENCIES = 5  # 默认单个模型最大并发数
 model_semaphores: Dict[
-    Tuple[str, str], asyncio.Semaphore
+    Tuple[str, str], asyncio.Semaphore  #信号量池
 ] = {}  # key: (model_name, platform)
 openai_router = APIRouter(prefix="/v1", tags=["OpenAI 兼容平台整合接口"])
 
@@ -137,7 +137,7 @@ async def list_models() -> Dict:
     tasks = [
         asyncio.create_task(task(name, config))
         for name, config in get_config_platforms().items()
-    ]
+    ]# 并发查询所有平台的模型
     for t in asyncio.as_completed(tasks):
         result += await t
 
@@ -155,7 +155,6 @@ async def create_chat_completions(
 
 @openai_router.post("/completions")
 async def create_completions(
-    request: Request,
     body: OpenAIChatInput,
 ):
     async with get_model_client(body.model) as client:
@@ -164,7 +163,6 @@ async def create_completions(
 
 @openai_router.post("/embeddings")
 async def create_embeddings(
-    request: Request,
     body: OpenAIEmbeddingsInput,
 ):
     params = body.model_dump(exclude_unset=True)
@@ -174,7 +172,7 @@ async def create_embeddings(
 
 @openai_router.post("/images/generations")
 async def create_image_generations(
-    request: Request,
+
     body: OpenAIImageGenerationsInput,
 ):
     async with get_model_client(body.model) as client:

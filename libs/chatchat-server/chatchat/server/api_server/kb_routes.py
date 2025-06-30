@@ -31,7 +31,7 @@ from chatchat.server.knowledge_base.kb_cache.faiss_cache import memo_faiss_pool
 
 kb_router = APIRouter(prefix="/knowledge_base", tags=["Knowledge Base Management"])
 
-
+#创建路由
 @kb_router.post(
     "/{mode}/{param}/chat/completions", summary="知识库对话，openai 兼容，参数与 /chat/kb_chat 一致"
 )
@@ -69,7 +69,7 @@ async def kb_chat_endpoint(
 kb_router.get(
     "/list_knowledge_bases", response_model=ListResponse, summary="获取知识库列表"
 )(list_kbs)
-
+## 列出所有知识库
 kb_router.post(
     "/create_knowledge_base", response_model=BaseResponse, summary="创建知识库"
 )(create_kb)

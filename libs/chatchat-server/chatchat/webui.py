@@ -10,11 +10,11 @@ from chatchat.webui_pages.kb_chat import kb_chat
 from chatchat.webui_pages.knowledge_base.knowledge_base import knowledge_base_page
 from chatchat.webui_pages.utils import *
 
-api = ApiRequest(base_url=api_address())
+api = ApiRequest(base_url=api_address()) # 创建API请求对象
 
 if __name__ == "__main__":
     is_lite = "lite" in sys.argv  # TODO: remove lite mode
-
+     
     st.set_page_config(
         "Langchain-Chatchat WebUI",
         get_img_base64("chatchat_icon_blue_square_v2.png"),

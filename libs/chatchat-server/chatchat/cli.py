@@ -13,7 +13,7 @@ from chatchat.server.utils import get_default_embedding
 logger = build_logger()
 
 
-@click.group(help="chatchat 命令行工具")
+@click.group(help="chatchat 命令行工具")  #装饰器
 def main():
     ...
 
@@ -41,16 +41,16 @@ def init(
     recreate_kb: bool = False,
     kb_names: str = "",
 ):
-    Settings.set_auto_reload(False)
+    Settings.set_auto_reload(False) #关闭配置自动重载
     bs = Settings.basic_settings
-    kb_names = [x.strip() for x in kb_names.split(",")]
+    kb_names = [x.strip() for x in kb_names.split(",")] # 知识库名称列表
     logger.success(f"开始初始化项目数据目录：{Settings.CHATCHAT_ROOT}")
-    Settings.basic_settings.make_dirs()
+    Settings.basic_settings.make_dirs() # 创建所有数据目录
     logger.success("创建所有数据目录：成功。")
     if(bs.PACKAGE_ROOT / "data/knowledge_base/samples" != Path(bs.KB_ROOT_PATH) / "samples"):
         shutil.copytree(bs.PACKAGE_ROOT / "data/knowledge_base/samples", Path(bs.KB_ROOT_PATH) / "samples", dirs_exist_ok=True)
     logger.success("复制 samples 知识库文件：成功。")
-    create_tables()
+    create_tables() #创建数据库的表结构
     logger.success("初始化知识库数据库：成功。")
 
     if xf_endpoint:
@@ -78,6 +78,7 @@ def init(
 
 main.add_command(startup_main, "start")
 main.add_command(kb_main, "kb")
+
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from typing import Literal
 import uvicorn
 from fastapi import Body, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+from starlette.staticfiles import StaticFiles
 from starlette.responses import RedirectResponse
 
 from chatchat import __version__
@@ -33,7 +33,7 @@ def create_app(run_mode: str = None):
             allow_methods=["*"],
             allow_headers=["*"],
         )
-
+  # 跨域
     @app.get("/", summary="swagger 文档", include_in_schema=False)
     async def document():
         return RedirectResponse(url="/docs")

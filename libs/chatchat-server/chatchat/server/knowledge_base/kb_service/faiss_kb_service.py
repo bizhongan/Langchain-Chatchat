@@ -129,8 +129,26 @@ class FaissKBService(KBService):
 
 
 if __name__ == "__main__":
-    faissService = FaissKBService("test")
-    faissService.add_doc(KnowledgeFile("README.md", "test"))
-    faissService.delete_doc(KnowledgeFile("README.md", "test"))
-    faissService.do_drop_kb()
-    print(faissService.search_docs("如何启动api服务"))
+    faissService = FaissKBService("samples")
+    
+    # 1. 添加文档
+    print("🔄 添加文档...")
+    result = faissService.add_doc(KnowledgeFile("README.md", "samples"))
+    print(f"添加结果: {result}")
+    
+    # 2. 搜索文档 (在删除之前)
+    print("\n🔍 搜索文档...")
+    search_results = faissService.search_docs("如何启动api服务")
+    print(f"搜索结果: {search_results}")
+    
+    # 3. 删除文档
+    print("\n🗑️  删除文档...")
+    delete_result = faissService.delete_doc(KnowledgeFile("README.md", "samples"))
+    print(f"删除结果: {delete_result}")
+    
+    # 4. 删除知识库
+    print("\n💥 删除整个知识库...")
+    drop_result = faissService.do_drop_kb()
+    print(f"删除知识库结果: {drop_result}")
+    
+    print("\n✅ 测试完成！")

@@ -16,11 +16,11 @@ class ThreadSafeObject:
     def __init__(
         self, key: Union[str, Tuple], obj: Any = None, pool: "CachePool" = None
     ):
-        self._obj = obj
-        self._key = key
-        self._pool = pool
-        self._lock = threading.RLock()
-        self._loaded = threading.Event()
+        self._obj = obj    #实际的业务对象
+        self._key = key     # 对象的唯一标识
+        self._pool = pool    # 对象所属的缓存池
+        self._lock = threading.RLock()  # 互斥锁
+        self._loaded = threading.Event()  # 事件对象
 
     def __repr__(self) -> str:
         cls = type(self).__name__

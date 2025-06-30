@@ -66,7 +66,7 @@ async def chat_completions(
     if body.max_tokens in [None, 0]:
         body.max_tokens = Settings.model_settings.MAX_TOKENS
 
-    client = get_OpenAIClient(model_name=body.model, is_async=True)
+    client = get_OpenAIClient(model_name=body.model, is_async=True)#获取OpenAI客户端
     extra = {**body.model_extra} or {}
     for key in list(extra):
         delattr(body, key)

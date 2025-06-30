@@ -66,10 +66,10 @@ class KBService(ABC):
         self.kb_info = kb_info or Settings.kb_settings.KB_INFO.get(
             knowledge_base_name, f"关于{knowledge_base_name}的知识库"
         )
-        self.embed_model = embed_model
-        self.kb_path = get_kb_path(self.kb_name)
-        self.doc_path = get_doc_path(self.kb_name)
-        self.do_init()
+        self.embed_model = embed_model #文本向量化模型
+        self.kb_path = get_kb_path(self.kb_name)# 知识库的根目录
+        self.doc_path = get_doc_path(self.kb_name)# 知识库的文档目录
+        self.do_init()# 初始化知识库
 
     def __repr__(self) -> str:
         return f"{self.kb_name} @ {self.embed_model}"
@@ -432,7 +432,7 @@ class KBServiceFactory:
 
 
 def get_kb_details() -> List[Dict]:
-    kbs_in_folder = list_kbs_from_folder()
+    kbs_in_folder = list_kbs_from_folder()  #收集文件夹中的知识库
     kbs_in_db: List[KnowledgeBaseSchema] = KBService.list_kbs()
     result = {}
 
